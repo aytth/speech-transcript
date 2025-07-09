@@ -7,7 +7,7 @@ import '../style/RegisterForm.css'
 import logo from '../assets/logo.png'
 import github from '../assets/Github.png'
 import linkedin from '../assets/LinkedIn.png'
-import InitialBackground from './InitialBackground';
+import ThreeBackground from './ThreeBackground';
 
 export default function RegisterForm() {
   const navigate = useNavigate()
@@ -149,7 +149,7 @@ export default function RegisterForm() {
 
   return (
     <>
-      <InitialBackground />
+      <ThreeBackground />
       <div className="register-bg">
         <div className="register-container">
           <div className="register-box">

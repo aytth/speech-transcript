@@ -7,7 +7,7 @@ import '../style/LoginForm.css'
 import logo from '../assets/logo.png'
 import github from '../assets/Github.png'
 import linkedin from '../assets/LinkedIn.png'
-import InitialBackground from './InitialBackground';
+import ThreeBackground from './ThreeBackground';
 
 export default function LoginForm() {
   const navigate = useNavigate()
@@ -148,7 +148,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <InitialBackground />
+      <ThreeBackground />
       <div className="login-bg">
         <div className="login-container">
           <div className="login-box">
