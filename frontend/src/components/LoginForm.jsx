@@ -7,6 +7,7 @@ import '../style/LoginForm.css'
 import logo from '../assets/logo.png'
 import github from '../assets/Github.png'
 import linkedin from '../assets/LinkedIn.png'
+import InitialBackground from './InitialBackground';
 
 export default function LoginForm() {
   const navigate = useNavigate()
@@ -146,65 +147,68 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="login-bg">
-      <div className="login-container">
-        <div className="login-box">
-          <div className="logo-container">
-            <span className="app-title">Speech Transcript</span>
-          </div>
-          <form onSubmit={handleSubmit} className="login-form">
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Username"
-                name="username"
-                onChange={handleChange}
-                required
-              />
-              <FaUser className="icon" />
+    <>
+      <InitialBackground />
+      <div className="login-bg">
+        <div className="login-container">
+          <div className="login-box">
+            <div className="logo-container">
+              <span className="app-title">Speech Transcript</span>
             </div>
-            <div className="input-box">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                placeholder="Password"
-                name="password"
-                onChange={handleChange}
-                onPaste={(e) => e.preventDefault()}
-                required
-              />
-              <FaLock className="icon" />
-              <span
-                className={`toggle-password ${showPassword ? 'visible' : ''}`}
-                onClick={() => setShowPassword((p) => !p)}
-                title={showPassword ? 'Hide password' : 'Show password'}
-              >
-                {showPassword ? '🙈' : '👁️'}
-              </span>
+            <form onSubmit={handleSubmit} className="login-form">
+              <div className="input-box">
+                <input
+                  type="text"
+                  placeholder="Username"
+                  name="username"
+                  onChange={handleChange}
+                  required
+                />
+                <FaUser className="icon" />
+              </div>
+              <div className="input-box">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  name="password"
+                  onChange={handleChange}
+                  onPaste={(e) => e.preventDefault()}
+                  required
+                />
+                <FaLock className="icon" />
+                <span
+                  className={`toggle-password ${showPassword ? 'visible' : ''}`}
+                  onClick={() => setShowPassword((p) => !p)}
+                  title={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? '🙈' : '👁️'}
+                </span>
+              </div>
+              {error && <p className="error">{error}</p>}
+              <div className="forgot-password">
+                <a onClick={() => navigate('/forgot-password')} className="forgot-password">
+                  Forgot Password?
+                </a>
+              </div>
+              <button type="submit" className="login-btn" disabled={loading}>
+                {loading ? 'Signing In...' : 'Sign In'}
+              </button>
+            </form>
+            {/* Remove GitHub/LinkedIn section, keep Google if present */}
+            <div className="external-login-section">
+              <div id="google-signin-button" style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}></div>
             </div>
-            {error && <p className="error">{error}</p>}
-            <div className="forgot-password">
-              <a onClick={() => navigate('/forgot-password')} className="forgot-password">
-                Forgot Password?
-              </a>
+            <div className="register-link">
+              <p>
+                Don't have an account?{' '}
+                <span onClick={() => navigate('/register')} className="register-text">
+                  Register
+                </span>
+              </p>
             </div>
-            <button type="submit" className="login-btn" disabled={loading}>
-              {loading ? 'Signing In...' : 'Sign In'}
-            </button>
-          </form>
-          {/* Remove GitHub/LinkedIn section, keep Google if present */}
-          <div className="external-login-section">
-            <div id="google-signin-button" style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}></div>
-          </div>
-          <div className="register-link">
-            <p>
-              Don't have an account?{' '}
-              <span onClick={() => navigate('/register')} className="register-text">
-                Register
-              </span>
-            </p>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
