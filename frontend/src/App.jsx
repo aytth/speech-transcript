@@ -4,7 +4,6 @@ import { AuthProvider, useAuth } from './AuthContext'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 import Dashboard from './components/Dashboard'
-// import TranscriptHistory from './components/TranscriptHistory'
 import './style/App.css'
 
 function PrivateRoute({ children }) {

@@ -1,108 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import { FaUser, FaLock } from 'react-icons/fa'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../AuthContext'
-import '../style/LoginForm.css'
-
-import logo from '../assets/logo.png'
-import github from '../assets/Github.png'
-import linkedin from '../assets/LinkedIn.png'
+import React, { useState, useEffect } from 'react';
+import { FaUser, FaLock } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
+import '../style/LoginForm.css';
 import ThreeBackground from './ThreeBackground';
 
 export default function LoginForm() {
   const navigate = useNavigate()
   const { login } = useAuth()
 
-  const API_BASE_URL = import.meta.env.VITE_API_SOURCE
-  const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID?.trim()
+  const API_BASE_URL = import.meta.env.VITE_API_SOURCE;
   const suspiciousPattern = /('|--|;|<script|<img|onerror=|onload=|select\s|insert\s|drop\s|union\s)/i
 
   const [formData, setFormData] = useState({ username: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-
-  // GitHub OAuth
-  const handleGitHubLogin = () => {
-    window.location.href = `${API_BASE_URL}/backend/api/Auth/github_callback.php`
-  }
-  // LinkedIn OAuth
-  const handleLinkedInLogin = () => {
-    window.location.href = `${API_BASE_URL}/backend/api/Auth/linkedin_callback.php`
-  }
-
-  // catch GitHub callback
-  useEffect(() => {
-    const hash = window.location.hash
-    const parts = hash.split('?')
-    if (parts[1]) {
-      const params = new URLSearchParams(parts[1])
-      const ghUid = params.get('githubUserId')
-      if (ghUid) {
-        login(parseInt(ghUid, 10))
-        window.history.replaceState({}, '', parts[0])
-        navigate('/home')
-      }
-    }
-  }, [login, navigate])
-
-  // catch LinkedIn callback
-  useEffect(() => {
-    const hash = window.location.hash
-    const parts = hash.split('?')
-    if (parts[1]) {
-      const params = new URLSearchParams(parts[1])
-      const liUid = params.get('linkedinUserId')
-      if (liUid) {
-        login(parseInt(liUid, 10))
-        window.history.replaceState({}, '', parts[0])
-        navigate('/home')
-      }
-    }
-  }, [login, navigate])
-
-  // Google Sign-In
-  useEffect(() => {
-    /* global google */
-    if (window.google && GOOGLE_CLIENT_ID) {
-      window.google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: handleGoogleResponse,
-      })
-      window.google.accounts.id.renderButton(
-        document.getElementById('google-signin-button'),
-        {
-          type: 'icon',
-          shape: 'circle',
-          theme: 'outline',
-          size: 'large',
-        }
-      )
-    }
-  }, [GOOGLE_CLIENT_ID])
-
-  async function handleGoogleResponse(response) {
-    try {
-      const res = await fetch(
-        `${API_BASE_URL}/backend/api/Auth/google_callback.php`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id_token: response.credential }),
-        }
-      )
-      const data = await res.json()
-      if (data.status === 'success' && data.userId) {
-        login(data.userId)
-        navigate('/home')
-      } else {
-        setError(data.message || 'Google login failed')
-      }
-    } catch (err) {
-      console.error(err)
-      setError('Google login error')
-    }
-  }
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -123,7 +36,7 @@ export default function LoginForm() {
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/backend/api/LoginForm/login.php`,
+        `${API_BASE_URL}/api/auth/login`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

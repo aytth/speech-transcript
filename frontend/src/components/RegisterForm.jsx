@@ -3,18 +3,12 @@ import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import '../style/RegisterForm.css'
-
-import logo from '../assets/logo.png'
-import github from '../assets/Github.png'
-import linkedin from '../assets/LinkedIn.png'
 import ThreeBackground from './ThreeBackground';
 
 export default function RegisterForm() {
   const navigate = useNavigate()
   const { login } = useAuth()
-
   const API_BASE_URL = import.meta.env.VITE_API_SOURCE
-  const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID?.trim()
   const suspiciousPattern = /('|--|;|<script|<img|onerror=|onload=|select\s|insert\s|drop\s|union\s)/i
 
   const [formData, setFormData] = useState({
@@ -34,49 +28,6 @@ export default function RegisterForm() {
     number: false,
     special: false,
   })
-
-  // Google sign-in
-  useEffect(() => {
-    /* global google */
-    if (window.google && GOOGLE_CLIENT_ID) {
-      window.google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: handleGoogleResponse,
-      })
-      window.google.accounts.id.renderButton(
-        document.getElementById('google-signup-button'),
-        {
-          type: 'icon',
-          shape: 'circle',
-          theme: 'outline',
-          size: 'large',
-        }
-      )
-    }
-  }, [GOOGLE_CLIENT_ID])
-
-  async function handleGoogleResponse(response) {
-    try {
-      const res = await fetch(
-        `${API_BASE_URL}/backend/api/Auth/google_callback.php`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id_token: response.credential }),
-        }
-      )
-      const data = await res.json()
-      if (data.status === 'success' && data.userId) {
-        login(data.userId)
-        navigate('/home')
-      } else {
-        setErrors(data.message || 'Google signup failed')
-      }
-    } catch (err) {
-      console.error(err)
-      setErrors('Google signup error')
-    }
-  }
 
   // track pw rules live
   useEffect(() => {
@@ -121,7 +72,7 @@ export default function RegisterForm() {
 
     try {
       const res = await fetch(
-        `${API_BASE_URL}/backend/api/Auth/register.php`,
+        `${API_BASE_URL}/api/auth/register`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
