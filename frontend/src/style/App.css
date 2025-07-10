@@ -1,0 +1,36 @@
+:root {
+  --primary: #646cff;
+  --accent: #61dafb;
+  --recording: #ff4d4f;
+  --stop: #faad14;
+  --bg: #f0f2f5;
+  --text: #333;
+  --radius: 8px;
+  --transition: 0.3s ease;
+  --font: 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  overflow-x: hidden;
+}
+
+.app-container {
+  max-width: 1024px;
+  margin: 2rem auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50%     { transform: scale(1.1); }
+}

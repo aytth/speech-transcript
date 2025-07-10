@@ -1,0 +1,40 @@
+.recorder {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.recorder button {
+padding: 0.75rem 1.5rem;
+margin: 0.5rem;
+font-size: 1rem;
+border: none;
+border-radius: var(--radius);
+cursor: pointer;
+transition: background var(--transition), transform 0.2s;
+}
+
+.recorder button.start {
+background: var(--primary);
+color: #fff;
+}
+.recorder button.start:hover {
+transform: scale(1.05);
+}
+
+.recorder button.recording {
+background: var(--recording);
+color: #fff;
+animation: pulse 1s infinite;
+}
+.recorder button.recording:hover {
+transform: scale(1.1);
+}
+
+.recorder button.stop {
+background: var(--stop);
+color: #fff;
+}
+.recorder button.stop:hover {
+transform: scale(1.05);
+}
