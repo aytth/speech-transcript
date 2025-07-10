@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './AuthContext'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
-import Dashboard from './components/Dashboard'
+import DashBoard from './components/DashBoard'
 import './style/App.css'
 
 function PrivateRoute({ children }) {
@@ -23,7 +23,7 @@ export default function App() {
             path="/home"
             element={
               <PrivateRoute>
-                <Dashboard />
+                <DashBoard />
               </PrivateRoute>
             }
           />
@@ -31,7 +31,6 @@ export default function App() {
             path="/history"
             element={
               <PrivateRoute>
-                {/* <TranscriptHistory /> */}
               </PrivateRoute>
             }
           />
