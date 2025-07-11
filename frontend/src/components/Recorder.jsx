@@ -16,7 +16,7 @@ export default function Recorder() {
 
     const token = localStorage.getItem('token')
     const res = await fetch(
-      `${import.meta.env.VITE_API_SOURCE}/api/transcripts/upload`,
+      `${import.meta.env.VITE_API_SOURCE}/transcripts/upload`,
       {
         method: 'POST',
         headers: {
