@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Recorder from './Recorder';
-import '../style/Dashboard.css';
+import '../style/DashBoard.css';
 
 export default function Dashboard() {
   const [transcript, setTranscript] = useState(null);
