@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { FaUser, FaLock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { FaLock, FaEye, FaEyeSlash, FaUser } from 'react-icons/fa'
 import '../style/LoginForm.css';
 import ThreeBackground from './ThreeBackground';
 
@@ -40,13 +40,17 @@ export default function LoginForm() {
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({
+            username: formData.username,
+            password: formData.password
+          }),
         }
       )
       const result = await response.json()
       setLoading(false)
 
-      if (result.status === 'success' && result.userId) {
+      if (result.status === 'success' && result.userId && result.token) {
+        localStorage.setItem('token', result.token)
         login(result.userId)
         navigate('/home')
       } else {
@@ -85,16 +89,16 @@ export default function LoginForm() {
                   placeholder="Password"
                   name="password"
                   onChange={handleChange}
-                  onPaste={(e) => e.preventDefault()}
+                  onPaste={e => e.preventDefault()}
                   required
                 />
                 <FaLock className="icon" />
                 <span
-                  className={`toggle-password ${showPassword ? 'visible' : ''}`}
-                  onClick={() => setShowPassword((p) => !p)}
+                  className="toggle-password"
+                  onClick={() => setShowPassword(p => !p)}
                   title={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  {showPassword ? '🙈' : '👁️'}
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </span>
               </div>
               {error && <p className="error">{error}</p>}
@@ -107,7 +111,6 @@ export default function LoginForm() {
                 {loading ? 'Signing In...' : 'Sign In'}
               </button>
             </form>
-            {/* Remove GitHub/LinkedIn section, keep Google if present */}
             <div className="external-login-section">
               <div id="google-signin-button" style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}></div>
             </div>

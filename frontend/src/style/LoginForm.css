@@ -153,3 +153,18 @@
   font-size: 14px;
   text-align: center;
 }
+
+.toggle-password svg {
+  font-size: 18px;        
+  color: #A0AABF;         
+  position: absolute;
+  right: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.toggle-password:hover svg {
+  transform: translateY(-50%) scale(1.1);
+}
