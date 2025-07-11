@@ -5,7 +5,7 @@
 ---
 
 ## 📂 Repository Structure
-
+```bash
 ├── backend/ 
 │ ├── db/ # SQLite Connection
 │ ├── middleware/ # auth guard
@@ -21,7 +21,7 @@
 │ └── main.jsx
 ├── .env # environment variables
 └── vite.config.js
-
+```
 
 ---
 
@@ -70,11 +70,11 @@
 ---
 
 
-```markdown
+
 ## 🚀 Live Demo
-
-Check out the app in action at 👉 [https://speechrec.aynproject.com](https://speechrec.aynproject.com)
-
+```markdown
+Check out the app in action at 👉 [https://speechrec.aynproject.com]
+```
 
 ---
 
