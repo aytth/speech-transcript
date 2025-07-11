@@ -28,8 +28,14 @@ router.post('/register', async (req, res) => {
 
 // POST Request for Logging in a user
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+  const { username, email, password } = req.body;
+  const identifier = username || email;
+  if (!identifier || !password) {
+    return res.status(400).json({ status: 'error', message: 'Missing credentials' });
+  }
+  const user = db
+    .prepare('SELECT * FROM users WHERE username = ? OR email = ?')
+    .get(identifier, identifier);
   if (!user) return res.status(401).json({ status: 'error', message: 'Invalid credentials' });
 
   const ok = await bcrypt.compare(password, user.password_hash);
