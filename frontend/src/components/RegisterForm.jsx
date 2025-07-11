@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
+import { FaLock, FaEye, FaEyeSlash, FaUser, FaEnvelope } from 'react-icons/fa'
 import '../style/RegisterForm.css'
 import ThreeBackground from './ThreeBackground';
 
@@ -129,22 +129,22 @@ export default function RegisterForm() {
                 />
                 <FaEnvelope className="icon" />
               </div>
-              <div className="input-box password-container">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  placeholder="Password"
-                  onChange={handleChange}
-                  required
-                />
-                <FaLock className="icon" />
-                <span
-                  className={`toggle-password ${showPassword ? 'visible' : ''}`}
-                  onClick={() => setShowPassword((p) => !p)}
-                  title={showPassword ? 'Hide password' : 'Show password'}
-                >
-                  {showPassword ? '🙈' : '👁️'}
-                </span>
+                <div className="input-box password-container">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    placeholder="Password"
+                    onChange={handleChange}
+                    required
+                  />
+                  <FaLock className="icon" />
+                  <span
+                    className="toggle-password"
+                    onClick={() => setShowPassword(p => !p)}
+                    title={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </span>
 
                 <div className="password-requirements">
                   <p className={pwRules.length ? 'valid' : 'invalid'}>

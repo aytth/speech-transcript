@@ -1,48 +1,58 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const db = require('../db');
+const express = require('express')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const db = require('../db')
+const router = express.Router()
 
-const router = express.Router();
-
-// POST Request for Registering a new user
+// API for Register
 router.post('/register', async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password } = req.body
   if (!username || !email || !password)
-    return res.status(400).json({ status: 'error', message: 'Missing fields' });
+    return res.status(400).json({ status: 'error', message: 'Missing fields' })
 
-  const hash = await bcrypt.hash(password, 12);
+  const hash = await bcrypt.hash(password, 12)
   try {
-    const stmt = db.prepare('INSERT INTO users (username, email, password_hash) VALUES (?,?,?)');
-    const info = stmt.run(username, email, hash);
-    const userId = info.lastInsertRowid;
-    const token = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.json({ status: 'success', userId, token });
+    const stmt = db.prepare(
+      'INSERT INTO users (username, email, password_hash) VALUES (?,?,?)'
+    )
+    const info = stmt.run(username, email, hash)
+    const token = jwt.sign({ userId: info.lastInsertRowid }, process.env.JWT_SECRET, {
+      expiresIn: '7d',
+    })
+    return res.json({ status: 'success', userId: info.lastInsertRowid, token })
   } catch (e) {
-    if (e.message.includes('UNIQUE')) {
-      return res.status(400).json({ status: 'error', message: 'Username or email already taken' });
-    }
-    res.status(500).json({ status: 'error', message: e.message });
+    if (e.message.includes('UNIQUE'))
+      return res
+        .status(400)
+        .json({ status: 'error', message: 'Username or email already taken' })
+    return res.status(500).json({ status: 'error', message: e.message })
   }
-});
+})
 
-// POST Request for Logging in a user
+// API for Login
 router.post('/login', async (req, res) => {
-  const { username, email, password } = req.body;
-  const identifier = username || email;
-  if (!identifier || !password) {
-    return res.status(400).json({ status: 'error', message: 'Missing credentials' });
-  }
+  const { username, password } = req.body
+  if (!username || !password)
+    return res.status(400).json({ status: 'error', message: 'Missing credentials' })
+
   const user = db
-    .prepare('SELECT * FROM users WHERE username = ? OR email = ?')
-    .get(identifier, identifier);
-  if (!user) return res.status(401).json({ status: 'error', message: 'Invalid credentials' });
+    .prepare('SELECT * FROM users WHERE username = ?')
+    .get(username)
+  if (!user)
+    return res
+      .status(401)
+      .json({ status: 'error', message: 'Invalid username or password' })
 
-  const ok = await bcrypt.compare(password, user.password_hash);
-  if (!ok) return res.status(401).json({ status: 'error', message: 'Invalid credentials' });
+  const ok = await bcrypt.compare(password, user.password_hash)
+  if (!ok)
+    return res
+      .status(401)
+      .json({ status: 'error', message: 'Invalid username or password' })
 
-  const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-  res.json({ status: 'success', userId: user.id, token });
-});
+  const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+    expiresIn: '7d',
+  })
+  res.json({ status: 'success', userId: user.id, token })
+})
 
-module.exports = router;
+module.exports = router
