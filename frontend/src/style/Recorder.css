@@ -55,3 +55,165 @@ animation: spin 0.8s linear infinite;
 @keyframes spin {
 to { transform: rotate(360deg); }
 }
+
+.recorder-card {
+  background: #181a2a;
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 380px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.mic-gradient {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.recorder-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1.2rem;
+  font-size: 1.2rem;
+  color: #b3b3ff;
+  font-weight: 600;
+}
+.rec-label {
+  letter-spacing: 1px;
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+.rec-timer {
+  color: #ff5e62;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.waveform {
+  display: flex;
+  align-items: flex-end;
+  height: 40px;
+  width: 90%;
+  margin: 0.5rem 0 1.5rem 0;
+  gap: 2px;
+  opacity: 0.7;
+  justify-content: center;
+}
+.bar {
+  width: 4px;
+  height: 12px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #a259ff 0%, #ff5e62 100%);
+  animation: barAnim 1.2s infinite ease-in-out;
+  animation-play-state: paused;
+}
+.waveform.active .bar {
+  animation-play-state: running;
+}
+.bar:nth-child(2n) { height: 18px; }
+.bar:nth-child(3n) { height: 24px; }
+.bar:nth-child(4n) { height: 30px; }
+.bar:nth-child(5n) { height: 20px; }
+.bar:nth-child(6n) { height: 16px; }
+
+@keyframes barAnim {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(2.2); }
+}
+.rec-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.rec-btn {
+  border: none;
+  background: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(162,89,255,0.15);
+  transition: transform 0.2s;
+}
+.rec-btn:active {
+  transform: scale(0.96);
+}
+.save-gradient {
+  margin-top: 1.2rem;
+  width: 100%;
+  padding: 0.9rem 0;
+  border-radius: 2rem;
+  background: linear-gradient(90deg, #a259ff 0%, #ff5e62 100%);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(162,89,255,0.12);
+  transition: background 0.2s;
+}
+.save-gradient:active {
+  background: linear-gradient(90deg, #ff5e62 0%, #a259ff 100%);
+}
+.rec-playback {
+  width: 100%;
+  margin-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.rec-playback audio {
+  width: 100%;
+  margin-bottom: 0.7rem;
+  border-radius: 2rem;
+  background: #23234a;
+  box-shadow: 0 2px 8px rgba(162,89,255,0.12);
+  border: none;
+  padding: 0.2rem 0.5rem;
+  outline: none;
+}
+/* Remove default audio controls background (where supported) */
+audio::-webkit-media-controls-panel {
+  background: #23234a;
+  border-radius: 2rem;
+}
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-volume-slider,
+audio::-webkit-media-controls-mute-button {
+  filter: hue-rotate(-30deg) brightness(1.2) saturate(1.5);
+}
+.rec-transcript-fadein {
+  width: 100%;
+  margin-top: 1.5rem;
+  animation: fadeInTranscript 0.7s;
+  background: rgba(255,255,255,0.07);
+  border-radius: 1rem;
+  padding: 1rem;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(162,89,255,0.08);
+}
+.rec-transcript-fadein h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #a259ff;
+}
+.rec-transcript-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #fff;
+}
+@keyframes fadeInTranscript {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
