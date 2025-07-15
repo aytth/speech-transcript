@@ -27,12 +27,15 @@ flex-wrap: wrap;
 color: #ccc;
 }
 
+.full-text {
+  color: #fff;
+}
 .word {
-display: inline-block;
-opacity: 0;
-color: #61dafb;
-font-weight: 500;
-animation: wordFadeIn 0.4s forwards;
+  display: inline-block;
+  opacity: 0;
+  color: #fff;
+  font-weight: 500;
+  animation: wordFadeIn 0.4s forwards;
 }
 
 @keyframes wordFadeIn {

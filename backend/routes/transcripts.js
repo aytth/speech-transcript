@@ -23,18 +23,18 @@ router.post('/upload', auth, upload.single('audio'), async (req, res) => {
 
     fs.unlinkSync(localPath);
 
-    const transcription = asrRes.data.text;
+    const transcriptionText = asrRes.data.text;
     const info = db
       .prepare(
         'INSERT INTO transcripts (user_id, transcript_json) VALUES (?, ?)'
       )
-      .run(req.user.userId, JSON.stringify({ text: transcription }));
+      .run(req.user.userId, JSON.stringify({ text: transcriptionText }));
 
-    return res.json({ id: info.lastInsertRowid, transcription });
+      return res.json({ id: info.lastInsertRowid, transcription: { text: transcriptionText } });
   } catch (err) {
-    console.error('Transcription error:', err.message);
+    console.error('Transcription error:', err.response?.data || err.message);
     if (fs.existsSync(localPath)) fs.unlinkSync(localPath);
-    return res.status(500).json({ error: 'Transcription failed' });
+    return res.status(500).json({ error: err.response?.data || err.message });
   }
 });
 

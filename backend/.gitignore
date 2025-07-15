@@ -2,3 +2,5 @@ node_modules
 back_venv
 backend/.env
 .env
+asr_service/.venv
+asr_service/__pycache__
