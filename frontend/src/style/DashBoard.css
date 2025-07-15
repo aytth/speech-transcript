@@ -22,13 +22,13 @@
 }
 
 .dashboard-title {
-color: #fff;
-margin-bottom: 1rem;
-text-transform: uppercase;
-letter-spacing: 2px;
-animation: fadeInDown 0.8s ease-out;
-text-align: center;
-padding-top: 30px;
+  color: #fff;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: fadeInDown 0.8s ease-out forwards;
+  text-align: center;
+  padding-top: 30px;
 }
 
 .transcript {

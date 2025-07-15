@@ -9,12 +9,10 @@ export default function Dashboard() {
   return (
     <div className="dashboard">
       <div className="dashboard-bg" />
-      <h1 className="dashboard-title">Voice Recorder</h1>
-
+      <h1 className="dashboard-title">Speech Transcript</h1>
       <div className="actions">
         <Recorder onTranscription={t => { setTranscript(t); setShowNewTranscript(true); }} />
       </div>
-      {/* Removed the old transcript box */}
     </div>
   );
 }
