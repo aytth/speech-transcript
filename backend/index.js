@@ -1,3 +1,4 @@
+globalThis.File = require('node:buffer').File;
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
